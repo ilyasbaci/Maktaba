@@ -64,4 +64,15 @@ class BookRepository {
     fun getBookByIsbn(isbn: String): Book? {
         return booksList.find { it.isbn == isbn }
     }
+    fun searchBooksByTitle(title: String): List<Book> {
+        return booksList.filter {
+            it.title.contains(title, ignoreCase = true)
+        }
+    }
+    fun getBooksCount(): Int {
+        return booksList.size
+    }
+    fun getTotalPages(): Int {
+        return booksList.sumOf { it.nbPages }
+    }
 }
