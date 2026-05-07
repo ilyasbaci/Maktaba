@@ -11,25 +11,24 @@ import javax.inject.Inject
 class BookRepositoryImpl @Inject constructor() : BookRepository {
 
     private val _booksList = mutableListOf(
-        Book(isbn = "11111", title = "Clean Code", nbPages = 10),
-        Book(isbn = "22222", title = "The Pragmatic Programmer", nbPages = 0),
-        Book(isbn = "33333", title = "Design Patterns", nbPages = 0),
-        Book(isbn = "44444", title = "Refactoring", nbPages = 0),
-        Book(isbn = "55555", title = "Head First Design Patterns", nbPages = 0)
+        Book(isbn = "9780132350884", title = "Clean Code", nbPages = 431),
+        Book(isbn = "9780135957059", title = "The Pragmatic Programmer", nbPages = 352),
+        Book(isbn = "9780201633610", title = "Design Patterns", nbPages = 395),
+        Book(isbn = "9780201485677", title = "Refactoring", nbPages = 448),
+        Book(isbn = "9780596007126", title = "Head First Design Patterns", nbPages = 694)
     )
 
     private val booksFlow = MutableSharedFlow<List<Book>>(replay = 1).apply {
         tryEmit(_booksList.toList())
     }
-    
+
     override fun getAllBooks(): Flow<List<Book>> = flow {
-        delay(2000) // Simulate delay
+        delay(2000)
         emitAll(booksFlow)
     }
 
-    override fun getBookByIsbn(isbn: String): Book? {
-        return _booksList.find { it.isbn == isbn }
-    }
+    override fun getBookByIsbn(isbn: String): Book? =
+        _booksList.find { it.isbn == isbn }
 
     override fun addBook(book: Book) {
         _booksList.add(book)
